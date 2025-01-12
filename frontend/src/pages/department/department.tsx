@@ -31,7 +31,7 @@ const DepartManagement = () => {
         <button
           onClick={() => setShowModal(true)}
           className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 mb-4">
-          Add Employee
+          Add Department
         </button>
 
         <Table datas={departments ? departments: []} type="Department" />

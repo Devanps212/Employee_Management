@@ -8,28 +8,30 @@ import { Department } from "../../types";
 import Header from "../../components/header/header";
 import { fetchEmployees, handleAddEmployee } from "../../services/employeeService";
 import { fetchDepartments } from "../../services/departmentService";
+import { useSelector } from "react-redux";
 
 const EmployeeManagement = () => {
 
   const [employee, setEmployee] = useState<AddEmployee[] | null>(null)
   const [departments, setDepartments] = useState<Department[] | null>(null)
   const [showModal, setShowModal] = useState(false)
+  const token = useSelector((state: { token: string }) => state.token)
   
   useEffect(() => {
     const fetchData = async()=>{
-      const fetchedDepartments = await fetchDepartments()
+      const fetchedDepartments = await fetchDepartments(token)
       if(fetchedDepartments){
         setDepartments(fetchedDepartments)
       }
 
-      const fetchedEmployees = await fetchEmployees()
+      const fetchedEmployees = await fetchEmployees(token)
       if(fetchedEmployees){
         setEmployee(fetchedEmployees)
       }
     }
 
     fetchData()
-  }, [])
+  }, [token])
   
   
 

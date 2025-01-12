@@ -3,73 +3,67 @@ import { AddEmployee, TableData } from '../../types/form';
 import Modal from '../modal';
 import DynamicForm from '../form/form';
 import ADDEMPLOYEE from '../../constants/employee';
-import axios, { AxiosError } from 'axios';
 import config from '../../config/config';
 import { Department } from '../../types';
 import RenderHeader from './head';
 import RenderRows from './body';
 import { FaTimes } from 'react-icons/fa';
 import ADD_DEPARTMENT from '../../constants/department';
-import { fetchDepartments } from '../../services/departmentService';
+import { deleteEmployee, handleEditEmployee } from '../../services/employeeService';
+import { handleAddEmployee } from '../../services/employeeService';
+import { fetchDepartments, deleteDepartment, handleAddDepartment, handleEditDepartment } from '../../services/departmentService';
+import { useSelector } from 'react-redux';
 
 
 const Table = ({ datas, type }: { datas: AddEmployee[] | Department[], type: TableData }) => {
   const [showModal, setShowModal] = useState(false)
+  const [edit, setEdit] = useState(false)
   const [initialValues, setInitialValues] = useState<AddEmployee | Department | null>(null)
   const [departments, setDepartments] = useState<Department[] | []>([])
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
   const [itemToDelete, setItemToDelete] = useState<AddEmployee | Department | null>(null)
   const [selectedDepartment, setSelectedDepartment] = useState<Department | null>(null)
 
+
+  const token = useSelector((state: { token: string }) => state.token)
   useEffect(() => {
       const getDepartments = async () => {
-        const fetchedDepartments = await fetchDepartments()
+        const fetchedDepartments = await fetchDepartments(token)
         if (fetchedDepartments) {
           setDepartments(fetchedDepartments)
         }
       }
       getDepartments()
-    }, [])
+    }, [departments, setDepartments])
 
-  const handleSubmit = async (values: Record<string, string>, helpers: { resetForm: () => void }) => {
-    try {
-      const updatedValues = { ...values, _id: initialValues?._id }
-      const response = await axios.put(config.editEmployee, updatedValues)
-      alert(response.data.message)
-      helpers.resetForm()
-      setShowModal(false)
-      window.location.reload()
-    } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        alert(error.response?.data.message)
-        return
-      }
-      console.log(error)
-    }
+  const handleSubmit = async (
+    values: Record<string, string>, 
+    helpers: { resetForm: () => void },
+  ) => {
+    const updatedValues = { ...values, _id: initialValues?._id || ""}
+    await (type === "Department"
+      ? (edit 
+        ? handleEditDepartment(updatedValues, helpers, setShowModal, setEdit, token) 
+        : handleAddDepartment(updatedValues, helpers, token))
+      : (edit 
+        ? handleEditEmployee(updatedValues, helpers, setShowModal, setEdit, token) 
+        : handleAddEmployee(updatedValues, helpers, token)))
   }
 
-  const handleEdit = (item: Department | AddEmployee) => {
+  const handleEdit = (item: Department | AddEmployee)=>{
     setInitialValues(item)
     setShowModal(true)
+    setEdit(true)
   }
 
   const handleDelete = async () => {
-    try {
       if (!itemToDelete?._id) return
       const url = type === 'Employee' 
       ? `${config.deleteEmployee}/${itemToDelete._id}` 
       : `${config.deleteDepartment}/${itemToDelete._id}`
-      const response = await axios.delete(url)
-      alert(response.data)
-      setShowDeleteConfirmation(false)
-      window.location.reload()
-    } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        alert(error.response?.data.message)
-        return
-      }
-      console.log(error)
-    }
+      await (type === "Department" 
+      ? deleteDepartment(url, setShowDeleteConfirmation, token) 
+      : deleteEmployee(url, setShowDeleteConfirmation, token))
   }
 
   const confirmDelete = (item: Department | AddEmployee) => {
@@ -88,7 +82,7 @@ const Table = ({ datas, type }: { datas: AddEmployee[] | Department[], type: Tab
 
   return (
     <>
-      <table className="min-w-full table-auto border-collapse" style={{ tableLayout: 'auto' }}>
+      <table className="min-w-full table-auto border-collapse">
         <RenderHeader type={type} />
         {datas.length > 0 && (
           <RenderRows

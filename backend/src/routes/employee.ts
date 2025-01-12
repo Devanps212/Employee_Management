@@ -1,12 +1,13 @@
 import { addEmployee, getAllEmployees, updateEmployee, deleteEmployee } from "../controller/employee";
 import express from 'express'
+import verifyToken from "../middlewares/authMiddleware";
 
 const employeeRouter = express.Router()
 
-employeeRouter.post('/addEmployee', addEmployee)
-employeeRouter.get('/getEmployees', getAllEmployees)
-employeeRouter.put('/edit', updateEmployee)
-employeeRouter.delete('/delete/:_id', deleteEmployee)
+employeeRouter.post('/addEmployee', verifyToken, addEmployee)
+employeeRouter.get('/getEmployees', verifyToken, getAllEmployees)
+employeeRouter.put('/edit', verifyToken, updateEmployee)
+employeeRouter.delete('/delete/:_id', verifyToken, deleteEmployee)
 
 
 export default employeeRouter
