@@ -3,13 +3,14 @@ import { AddEmployee, TableData } from '../../types/form';
 import Modal from '../modal';
 import DynamicForm from '../form/form';
 import ADDEMPLOYEE from '../../constants/employee';
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError } from 'axios';
 import config from '../../config/config';
 import { Department } from '../../types';
 import RenderHeader from './head';
 import RenderRows from './body';
 import { FaTimes } from 'react-icons/fa';
 import ADD_DEPARTMENT from '../../constants/department';
+import { fetchDepartments } from '../../services/departmentService';
 
 
 const Table = ({ datas, type }: { datas: AddEmployee[] | Department[], type: TableData }) => {
@@ -21,21 +22,14 @@ const Table = ({ datas, type }: { datas: AddEmployee[] | Department[], type: Tab
   const [selectedDepartment, setSelectedDepartment] = useState<Department | null>(null)
 
   useEffect(() => {
-    const fetchDepartments = async () => {
-      try {
-        const departmentResponse: AxiosResponse = await axios.get(config.getAllDepartments)
-        setDepartments(departmentResponse.data)
-      } catch (error: unknown) {
-        if (error instanceof AxiosError) {
-          alert(error.response?.data.message)
-          return
+      const getDepartments = async () => {
+        const fetchedDepartments = await fetchDepartments()
+        if (fetchedDepartments) {
+          setDepartments(fetchedDepartments)
         }
-        alert(error)
       }
-    }
-
-    fetchDepartments()
-  }, [])
+      getDepartments()
+    }, [])
 
   const handleSubmit = async (values: Record<string, string>, helpers: { resetForm: () => void }) => {
     try {
