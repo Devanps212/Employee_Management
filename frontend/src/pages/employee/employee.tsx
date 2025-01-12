@@ -3,68 +3,39 @@ import Table from "../../components/table/table";
 import DynamicForm from "../../components/form/form";
 import Modal from "../../components/modal";
 import ADDEMPLOYEE from "../../constants/employee";
-import axios, { AxiosError, AxiosResponse } from "axios";
-import config from "../../config/config";
 import { AddEmployee } from "../../types/form";
 import { Department } from "../../types";
+import Header from "../../components/header/header";
+import { fetchEmployees, handleAddEmployee } from "../../services/employeeService";
+import { fetchDepartments } from "../../services/departmentService";
 
 const EmployeeManagement = () => {
 
   const [employee, setEmployee] = useState<AddEmployee[] | null>(null)
   const [departments, setDepartments] = useState<Department[] | null>(null)
+  const [showModal, setShowModal] = useState(false)
   
-
-  const fetchEmployees = async () => {
-    try {
-      const employees: AxiosResponse = await axios.get(config.getAllEmployees)
-      setEmployee(employees.data)
-    } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        alert(error.response?.data.message)
-        return
+  useEffect(() => {
+    const fetchData = async()=>{
+      const fetchedDepartments = await fetchDepartments()
+      if(fetchedDepartments){
+        setDepartments(fetchedDepartments)
       }
-      alert(error)
-    }
-  }
 
-  const fetchDepartments = async()=>{
-    try {
-      const departmentResponse: AxiosResponse = await axios.get(
-        config.getAllDepartments
-      )
-      setDepartments(departmentResponse.data)
-    } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        alert(error.response?.data.message)
-        return
+      const fetchedEmployees = await fetchEmployees()
+      if(fetchedEmployees){
+        setEmployee(fetchedEmployees)
       }
-      alert(error)
     }
-  }
 
-  useEffect(()=>{
-    fetchDepartments()
-    fetchEmployees()
+    fetchData()
   }, [])
   
-  const [showModal, setShowModal] = useState(false)
-
-  const handleAddEmployee = async(values: Record<string, string>, { resetForm }: { resetForm: () => void }) => {
-    try{
-      const response : AxiosResponse = await axios.post(config.addEmployee, values)
-      alert(response.data.message)
-      resetForm()
-
-    }catch(error){
-      if(error instanceof AxiosError){
-        alert(error.response?.data.message)
-        return
-      }
-      alert(error)
-    }
-  }
+  
 
   return (
+    <>
+    <Header/>
     <div className="h-screen flex flex-col justify-center items-center bg-gray-100 p-4">
       <div className="w-full max-w-5xl bg-white p-6 rounded-lg shadow-lg">
         <h1 className="text-center font-semibold text-2xl text-blue-500 mb-6">Employee Management</h1>
@@ -91,7 +62,8 @@ const EmployeeManagement = () => {
         )}
       </div>
     </div>
-  );
-};
+    </>
+  )
+}
 
-export default EmployeeManagement;
+export default EmployeeManagement

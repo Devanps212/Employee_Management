@@ -9,8 +9,8 @@ const RenderRows = ({
   }: {
     type: TableData,
     data: unknown,
-    confirmDelete: (item: unknown, type: TableData) => void,
-    handleEdit: (employee: unknown, type: TableData) => void,
+    confirmDelete: (item: Department | AddEmployee) => void,
+    handleEdit: (item: Department | AddEmployee) => void,
     handleDepartmentClick: (department: Department) => void,
   }) => {
     
@@ -30,7 +30,6 @@ const RenderRows = ({
               <tr key={employee?._id} className="hover:bg-gray-50">
                 <td className="px-4 py-2 border-b whitespace-nowrap">{index + 1}</td>
                 <td className="px-4 py-2 border-b whitespace-nowrap">{employee.name}</td>
-                <td className="px-4 py-2 border-b whitespace-nowrap">{employee.name}</td>
                 <td className="px-4 py-2 border-b whitespace-nowrap">{employee.position}</td>
                 <td className="px-4 py-2 border-b whitespace-nowrap">
                   <button
@@ -45,13 +44,13 @@ const RenderRows = ({
                 <td className="px-4 py-2 border-b whitespace-nowrap">
                   <button
                     className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600"
-                    onClick={() => handleEdit(employee, 'Employee')}
+                    onClick={() => handleEdit(employee)}
                   >
                     Edit
                   </button>
                   <button
                     className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 ml-2"
-                    onClick={() => confirmDelete(employee, 'Employee')}
+                    onClick={() => confirmDelete(employee)}
                   >
                     Delete
                   </button>
@@ -66,20 +65,17 @@ const RenderRows = ({
             (data as Department[]).map((department, index) => (
               <tr key={department._id} className="hover:bg-gray-50">
                 <td className="px-4 py-2 border-b whitespace-nowrap">{index + 1}</td>
-                <td className="px-4 py-2 border-b whitespace-nowrap">{department._id}</td>
                 <td className="px-4 py-2 border-b whitespace-nowrap">{department.name}</td>
                 <td className="px-4 py-2 border-b whitespace-nowrap">{department.description}</td>
                 <td className="px-4 py-2 border-b whitespace-nowrap">
                   <button
                     className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600"
-                    onClick={() => handleEdit(department, "Department")}
-                  >
+                    onClick={() => handleEdit(department)}>
                     Edit
                   </button>
                   <button
                     className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 ml-2"
-                    onClick={() => confirmDelete(department, "Department")}
-                  >
+                    onClick={() => confirmDelete(department)}>
                     Delete
                   </button>
                 </td>

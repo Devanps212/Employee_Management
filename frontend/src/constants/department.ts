@@ -1,8 +1,8 @@
-// const : InputAndLabels[] = [
-//     { input: 'name', label: 'Name' },
-//     { input: 'position', label: 'Position' },
-//     { input: 'department', label: 'Department' },
-//     { input: 'salary', label: 'Salary' },
-//     { input: 'email', label: 'Email' },
-//     { input: 'dateOfJoining', label: 'DateOfJoining'}
-// ]
+import { InputAndLabels } from "../types";
+
+const ADD_DEPARTMENT : InputAndLabels[] = [
+    { input: 'name', label: 'Name' },
+    { input: 'description', label: 'Description' }
+]
+
+export default ADD_DEPARTMENT

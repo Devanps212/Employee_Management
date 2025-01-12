@@ -1,35 +1,34 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
-import EmployeeManagement from "./pages/employee/employee"
-import Login from "./pages/login/login"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import EmployeeManagement from "./pages/employee/employee";
+import DepartManagement from "./pages/department/department";
+import Login from "./pages/login/login";
 import { useSelector } from "react-redux";
+import { ProtectedRoute, PublicRoute } from "./auth/routeGuard";
 
 function App() {
+  const token = useSelector((state: { token: string }) => state.token)
 
-const token = useSelector((state: {token: string})=>state.token)
-
-const ProtectedRoute = ({ token, children }: { token: string | null; children: JSX.Element }) => {
-  return token ? children : <Navigate to="/" />;
-};
-
-const PublicRoute = ({ token, children }: { token: string | null; children: JSX.Element }) => {
-  return token ? <Navigate to="/manage" /> : children;
-};
-
-  return(
+  return (
     <Router>
       <Routes>
         <Route path="/" element={
           <PublicRoute token={token}>
-            <Login/>
-          </PublicRoute>}/>
-        <Route path="/manage" element={
+            <Login />
+          </PublicRoute>
+        } />
+        <Route path="/employeeManage" element={
           <ProtectedRoute token={token}>
-            <EmployeeManagement/>
-          </ProtectedRoute>}/>
-      </Routes>
+            <EmployeeManagement />
+          </ProtectedRoute>
+        } />
+        <Route path="/departmentManage" element={
+          <ProtectedRoute token={token}>
+            <DepartManagement />
+          </ProtectedRoute>
+        } />
+        </Routes>
     </Router>
   )
-  
 }
 
 export default App

@@ -6,7 +6,9 @@ const config = {
     getAllEmployees :`${baseUrl}/employee/getEmployees`,
     editEmployee:`${baseUrl}/employee/edit`,
     deleteEmployee:`${baseUrl}/employee/delete`,
-    getAllDepartments :`${baseUrl}/department/getDepartments`
+    getAllDepartments :`${baseUrl}/department/getDepartments`,
+    deleteDepartment:`${baseUrl}/department/delete`,
+    addDepartment:`${baseUrl}/department/add`
 
 }
 

@@ -1,36 +1,25 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
 import DynamicForm from "../../components/form/form";
 import { LOGIN } from "../../constants";
-import config from "../../config/config";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { SET_TOKEN } from "../../feature/redux/reducer";
 import { useNavigate } from "react-router-dom";
-
+import { handleLogin } from "../../services/loginService";
 const Login = () => {
 
   const dispatch = useDispatch()
-  const token = useSelector((state: {token: string | null})=>state.token)
   const navigate = useNavigate()
 
-  console.log(token)
-
-  const handleSubmit = async(values:Record<string, string>)=>{
+  const handleSubmit = async (values: Record<string, string>) => {
     try{
-
-      const response: AxiosResponse = await axios.post(config.login, values)
-      const token : string = response.data.token
-      dispatch({type:SET_TOKEN, payload: token})
-      alert(response.data.message)
-      navigate('/manage')
-
-    }catch(error: unknown){
-      if(error instanceof AxiosError){
-        alert(error.response?.data.message)
-        return
+      const token = await handleLogin(values)
+      if (token!) {
+        dispatch({ type: SET_TOKEN, payload: token })
+        alert("Login successful!")
+        navigate('/employeeManage')
       }
+    }catch(error: unknown){
       alert(error)
     }
-
   }
   return (
     <div className="h-screen flex justify-center items-center bg-gray-100 p-4">
@@ -39,7 +28,7 @@ const Login = () => {
         <DynamicForm inputsWithLabel={LOGIN} onSubmit={handleSubmit}/>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
