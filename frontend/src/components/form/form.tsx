@@ -36,7 +36,8 @@ const DynamicForm = ({
             <div key={index} className="flex flex-col space-y-2">
               <label
                 htmlFor={inputWithLabel.input}
-                className="text-sm font-medium text-gray-700">
+                className="text-sm font-medium text-gray-700"
+                data-testid={`label-${inputWithLabel.input}`}>
                 {inputWithLabel.label}
               </label>
               {inputWithLabel.label.toLowerCase() === 'department' ? (
@@ -44,13 +45,15 @@ const DynamicForm = ({
                   as="select"
                   id={inputWithLabel.input}
                   name={inputWithLabel.input}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  data-testid={`select-${inputWithLabel.input}`}>
                   <option value="">Select Department</option>
                   {departments?.map(department => (
                     <option
                       key={department._id}
                       value={department._id}
-                      defaultValue={existingValues?._id}>
+                      defaultValue={existingValues?._id}
+                      data-testid={`department-option-${department._id}`}>
                       {department.name}
                     </option>
                   ))}
@@ -71,18 +74,21 @@ const DynamicForm = ({
                   id={inputWithLabel.input}
                   name={inputWithLabel.input}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  placeholder={`Enter ${inputWithLabel.label}`}/>
+                  placeholder={`Enter ${inputWithLabel.label}`}
+                  data-testid={`input-${inputWithLabel.input}`}/>
               )}
               <ErrorMessage
                 name={inputWithLabel.input}
                 component="div"
-                className="text-red-500 text-xs"/>
+                className="text-red-500 text-xs"
+                data-testid={`error-${inputWithLabel.input}`}/>
             </div>
           ))}
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 disabled:bg-gray-400">
+            className="w-full py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 disabled:bg-gray-400"
+            data-testid="submit-button">
             {isSubmitting ? 'Submitting...' : 'Submit'}
           </button>
         </FormikForm>

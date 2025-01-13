@@ -2,6 +2,8 @@ import axios, { AxiosError, AxiosResponse } from "axios"
 import config from "../config/config"
 import { AddEmployee } from "../types"
 import { setInterceptor } from "../feature/axios/axiosInterceptor"
+import { toast } from "react-toastify"
+
 
 export const fetchEmployees = async (token: string): Promise<AddEmployee[] | void> => {
     try {
@@ -10,10 +12,10 @@ export const fetchEmployees = async (token: string): Promise<AddEmployee[] | voi
       return response.data
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
-        alert(error.response?.data.message)
+        toast.error(error.response?.data.message)
         return
       }
-      alert(error)
+      toast.error(String(error))
     }
 }
 
@@ -25,15 +27,15 @@ export const deleteEmployee = async(
   try{
     setInterceptor(token)
     const response: AxiosResponse = await axios.delete(url)
-    alert(response.data)
+    toast.success(response.data)
     setShowDeleteConfirmation(false)
     window.location.reload()
   }catch(error: unknown) {
       if(error instanceof AxiosError){
-          alert(error.response?.data.message)
+          toast.error(error.response?.data.message)
           return
       }
-    alert(error)
+    toast.error(String(error))
   }
 }
 
@@ -45,15 +47,15 @@ export const handleAddEmployee = async(
     try{
       setInterceptor(token!)
       const response : AxiosResponse = await axios.post(config.addEmployee, values)
-      alert(response.data)
-      helpers.resetForm()
+      toast.success(response.data)
       window.location.reload()
+      helpers.resetForm()
     }catch(error){
       if(error instanceof AxiosError){
-        alert(error.response?.data.message)
+        toast.error(error.response?.data.message)
         return
       }
-      alert(error)
+      toast.error(String(error))
     }
 }
 
@@ -67,17 +69,16 @@ export const handleEditEmployee = async(
     try{
       setInterceptor(token)
       const response : AxiosResponse = await axios.put(config.editEmployee, values)
-      console.log(response.data)
-      alert(response.data)
+      toast.success(response.data)
       helpers.resetForm()
       if(setShowModal)setShowModal(false)
       setEdit(false)
       window.location.reload()
-    }catch(error){
+    }catch(error: unknown){
       if(error instanceof AxiosError){
-        alert(error.response?.data)
+        toast.error(error.response?.data.message)
         return
       }
-      alert(error)
+      toast.error(String(error))
     }
 }

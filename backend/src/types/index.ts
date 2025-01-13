@@ -1,8 +1,13 @@
 import { Employee, login } from "./employeeInterface";
-import { Department } from "./departmentInterface";
+import { Departments } from "./departmentInterface";
+import { HttpStatus } from "./httpStatus";
+import { ErrorResponse, NotFoundErrorResponse } from './error'
 
 export {
     Employee,
-    Department,
+    HttpStatus,
+    Departments,
+    ErrorResponse,
+    NotFoundErrorResponse,
     login
 }

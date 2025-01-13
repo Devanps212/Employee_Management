@@ -16,7 +16,7 @@ const RenderRows = ({
     
     const renderNoData = (colSpan: number) => (
       <tr>
-        <td colSpan={colSpan}>
+        <td colSpan={colSpan} data-testid="no-data-cell">
           <h2 className="text-3xl font-bold text-gray-900 text-center p-10">No Data Found</h2>
         </td>
       </tr>
@@ -35,6 +35,7 @@ const RenderRows = ({
                   <button
                     onClick={() => handleDepartmentClick(employee.department)}
                     className="text-blue-500"
+                    data-testid={`employee-department-button-${employee._id}`}
                   >
                     {employee.department.name}
                   </button>
@@ -45,13 +46,13 @@ const RenderRows = ({
                   <button
                     className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600"
                     onClick={() => handleEdit(employee)}
-                  >
+                    data-testid={`employee-edit-button-${employee._id}`}>
                     Edit
                   </button>
                   <button
                     className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 ml-2"
                     onClick={() => confirmDelete(employee)}
-                  >
+                    data-testid={`employee-delete-button-${employee._id}`}>
                     Delete
                   </button>
                 </td>
@@ -70,12 +71,14 @@ const RenderRows = ({
                 <td className="px-4 py-2 border-b whitespace-nowrap">
                   <button
                     className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600"
-                    onClick={() => handleEdit(department)}>
+                    onClick={() => handleEdit(department)}
+                    data-testid={`department-edit-button-${department._id}`}>
                     Edit
                   </button>
                   <button
                     className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 ml-2"
-                    onClick={() => confirmDelete(department)}>
+                    onClick={() => confirmDelete(department)}
+                    data-testid={`department-delete-button-${department._id}`}>
                     Delete
                   </button>
                 </td>

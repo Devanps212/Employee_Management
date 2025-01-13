@@ -18,12 +18,13 @@ const Login = () => {
         navigate('/employeeManage')
       }
     }catch(error: unknown){
+      console.log("error; ", error)
       alert(error)
     }
   }
   return (
     <div className="h-screen flex justify-center items-center bg-gray-100 p-4">
-      <div className="w-full max-w-sm p-8 border rounded-lg shadow-lg bg-white">
+      <div className="w-full max-w-sm p-8 border rounded-lg shadow-lg bg-white" data-testid="login-container">
         <h1 className="text-center font-semibold text-blue-500 text-2xl mb-6">Login</h1>
         <DynamicForm inputsWithLabel={LOGIN} onSubmit={handleSubmit}/>
       </div>

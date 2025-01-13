@@ -39,7 +39,7 @@ const EmployeeManagement = () => {
     <>
     <Header/>
     <div className="h-screen flex flex-col justify-center items-center bg-gray-100 p-4">
-      <div className="w-full max-w-5xl bg-white p-6 rounded-lg shadow-lg">
+      <div className="w-full max-w-5xl bg-white p-6 rounded-lg shadow-lg" data-testid="employee-management-card">
         <h1 className="text-center font-semibold text-2xl text-blue-500 mb-6">Employee Management</h1>
         
         <button

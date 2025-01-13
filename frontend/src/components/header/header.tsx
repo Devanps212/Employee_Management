@@ -23,10 +23,16 @@ const Header = () => {
         <div className="flex space-x-4">
           {token && (
             <>
-              <Link to="/employeeManage" className="hover:bg-blue-500 px-3 py-2 rounded-md">
+              <Link 
+                to="/employeeManage" 
+                className="hover:bg-blue-500 px-3 py-2 rounded-md"
+                data-testid="employee-management-link">
                 Employee Management
               </Link>
-              <Link to="/departmentManage" className="hover:bg-blue-500 px-3 py-2 rounded-md">
+              <Link 
+                to="/departmentManage" 
+                className="hover:bg-blue-500 px-3 py-2 rounded-md"
+                data-testid="department-management-link">
                 Department Managements
               </Link>
             </>

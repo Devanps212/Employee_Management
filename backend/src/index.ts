@@ -1,6 +1,7 @@
 import express, { Application } from 'express'
 import cors from 'cors'
 import {connectDB} from './config/db'
+import errorHandling from './middlewares/errorHandling'
 import config from './config'
 import adminRouter from './routes/admin'
 import employeeRouter from './routes/employee'
@@ -27,6 +28,7 @@ connectDB()
 app.use('/', adminRouter)
 app.use('/employee', employeeRouter)
 app.use('/department', departmentRouter)
+app.use(errorHandling as any)
 
 
 app.listen(PORT, ()=>{

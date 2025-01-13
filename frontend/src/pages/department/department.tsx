@@ -6,15 +6,17 @@ import { Department } from "../../types";
 import Header from "../../components/header/header";
 import ADD_DEPARTMENT from "../../constants/department";
 import { fetchDepartments, handleAddDepartment } from "../../services/departmentService";
+import { useSelector } from "react-redux";
 
 const DepartManagement = () => {
 
+  const token = useSelector((state: { token: string }) => state.token)
   const [departments, setDepartments] = useState<Department[] | null>(null)
   const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     const getDepartments = async () => {
-      const fetchedDepartments = await fetchDepartments()
+      const fetchedDepartments = await fetchDepartments(token)
       if (fetchedDepartments) {
         setDepartments(fetchedDepartments)
       }
@@ -43,7 +45,7 @@ const DepartManagement = () => {
             setShowModal={setShowModal}>
              <DynamicForm
               inputsWithLabel={ADD_DEPARTMENT} 
-              onSubmit={handleAddDepartment}/>
+              onSubmit={(values, helpers) => handleAddDepartment(values, helpers, token)}/>
           </Modal>
         )}
       </div>
