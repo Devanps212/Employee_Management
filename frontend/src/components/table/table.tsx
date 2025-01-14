@@ -34,7 +34,7 @@ const Table = ({ datas, type }: { datas: AddEmployee[] | Department[], type: Tab
         }
       }
       getDepartments()
-    }, [departments, setDepartments])
+    }, [])
 
   const handleSubmit = async (
     values: Record<string, string>, 

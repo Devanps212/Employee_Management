@@ -24,8 +24,9 @@ test.describe('Admin Login and Employee Management Suite', () => {
     // Step 3: Edit Employee
     await entityForm.editData({ entityType: 'employee' })
 
-    // Step 4: Delete Employee
+    // Step 4: Delete Employee and search
     await entityForm.deletData({ EntityForm: 'employee' })
+    await entityForm.search()
 
     // Step 5: Navigate to Department Management page and Add Department
     await page.getByTestId('department-management-link').click()

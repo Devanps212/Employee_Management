@@ -78,5 +78,10 @@ export default class EntityForm{
             await expect(this.page.getByRole('cell', { name: 'Data Analytics' })).not.toBeVisible()   
         }
     }
+
+    search = async()=>{
+        await this.page.getByPlaceholder('Search by Name').fill("Sam")
+        await expect(this.page.getByRole('cell', { name: 'Sample' })).toBeVisible()
+    }
     
 }

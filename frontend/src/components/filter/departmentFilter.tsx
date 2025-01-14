@@ -19,10 +19,10 @@ const DepartmentFilter: React.FC<DepartmentFilterProps> = ({
         onChange={onDepartmentChange}
         className="p-2 border border-gray-300 rounded-md"
       >
-        <option value="">All Departments</option>
+        <option value="" >All Departments</option>
         {departments &&
           departments.map((dept) => (
-            <option key={dept._id} value={dept.name}>
+            <option key={dept._id} value={dept.name} data-testid={`department-option-${dept.name}`}>
               {dept.name}
             </option>
           ))}
