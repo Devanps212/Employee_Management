@@ -11,7 +11,7 @@ const PORT = config.PORT || 5000
 const app: Application = express()
 
 const options = {
-    origin:'*',
+    origin: config.FRONTEND_URL,
     methods:["GET", "POST", "PUT", "DELETE"],
     exposedHeaders: [
         "Cross-Origin-Opener-Policy",
