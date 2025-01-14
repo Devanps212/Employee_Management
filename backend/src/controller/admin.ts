@@ -24,7 +24,7 @@ const adminLogin = async(req: Request, res: Response, next: NextFunction):Promis
     if(passCheck){
       const token = jwt.sign(
         { adminId: admin._id, email: admin.email },
-        config.SECRET_KEY as string,
+          "SECR3TK3Y" as string,
         { expiresIn: '1h' }
       )
 
