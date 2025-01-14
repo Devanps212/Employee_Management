@@ -1,4 +1,4 @@
-import express, { Application } from 'express'
+import express, { Application, Request, Response } from 'express'
 import cors from 'cors'
 import {connectDB} from './config/db'
 import errorHandling from './middlewares/errorHandling'
@@ -25,10 +25,15 @@ app.use(express.urlencoded({extended:true}))
 app.use(cors(options))
 connectDB()
 
-app.use('/api/', adminRouter)
-app.use('/api/employee', employeeRouter)
-app.use('/api/department', departmentRouter)
+
+app.use('/', adminRouter)
+app.use('/employee', employeeRouter)
+app.use('/department', departmentRouter)
 app.use(errorHandling as any)
+
+app.get('/status', (req: Request, res: Response) => {
+    res.status(200).json({ message: 'Server is running' });
+});
 
 
 app.listen(PORT, ()=>{

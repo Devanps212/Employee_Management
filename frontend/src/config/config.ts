@@ -1,15 +1,15 @@
 import baseUrl from "./baseUrl"
 
 const config = {
-    login: `${baseUrl}/api/login`,
-    addEmployee: `${baseUrl}/api/employee/addEmployee`,
-    getAllEmployees :`${baseUrl}/api/employee/getEmployees`,
-    editEmployee:`${baseUrl}/api/employee/edit`,
-    deleteEmployee:`${baseUrl}/api/employee/delete`,
-    getAllDepartments :`${baseUrl}/api/department/getDepartments`,
-    deleteDepartment:`${baseUrl}/api/department/deleteEmployee`,
-    addDepartment:`${baseUrl}/api/department/addDepartment`,
-    editDepartment:`${baseUrl}/api/department/updateDepartment`
+    login: `${baseUrl}/login`,
+    addEmployee: `${baseUrl}/employee/addEmployee`,
+    getAllEmployees :`${baseUrl}/employee/getEmployees`,
+    editEmployee:`${baseUrl}/employee/edit`,
+    deleteEmployee:`${baseUrl}/employee/delete`,
+    getAllDepartments :`${baseUrl}/department/getDepartments`,
+    deleteDepartment:`${baseUrl}/department/deleteEmployee`,
+    addDepartment:`${baseUrl}/department/addDepartment`,
+    editDepartment:`${baseUrl}/department/updateDepartment`
 
 }
 
