@@ -25,9 +25,9 @@ app.use(express.urlencoded({extended:true}))
 app.use(cors(options))
 connectDB()
 
-app.use('/', adminRouter)
-app.use('/employee', employeeRouter)
-app.use('/department', departmentRouter)
+app.use('/api/', adminRouter)
+app.use('/api/employee', employeeRouter)
+app.use('/api/department', departmentRouter)
 app.use(errorHandling as any)
 
 
