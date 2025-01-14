@@ -30,7 +30,7 @@ app.use('/', admin_1.default);
 app.use('/employee', employee_1.default);
 app.use('/department', department_1.default);
 app.use(errorHandling_1.default);
-app.get('/status', (req, res) => {
+app.get('/', (req, res) => {
     res.status(200).json({ message: 'Server is running' });
 });
 app.listen(PORT, () => {

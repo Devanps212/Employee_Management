@@ -5,9 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.connectDB = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
+const config_1 = __importDefault(require(".././config"));
 const connectDB = async () => {
     try {
-        await mongoose_1.default.connect("mongodb+srv://devanps212:6cdhhHsEJhnWLmDE@cluster0.gqhwx.mongodb.net/EmployeeManagement");
+        await mongoose_1.default.connect(config_1.default.MONGO_URL);
         console.log("connected to db");
     }
     catch (error) {

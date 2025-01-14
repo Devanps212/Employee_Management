@@ -7,6 +7,7 @@ exports.adminLogin = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const admin_1 = require("../models/admin");
+const config_1 = __importDefault(require("../config"));
 const appError_1 = require("../utils/appError");
 const logger_1 = __importDefault(require("../utils/logger"));
 const adminLogin = async (req, res, next) => {
@@ -20,7 +21,7 @@ const adminLogin = async (req, res, next) => {
         }
         const passCheck = await bcrypt_1.default.compare(Password, admin.password);
         if (passCheck) {
-            const token = jsonwebtoken_1.default.sign({ adminId: admin._id, email: admin.email }, "SECR3TK3Y", { expiresIn: '1h' });
+            const token = jsonwebtoken_1.default.sign({ adminId: admin._id, email: admin.email }, config_1.default.SECRET_KEY, { expiresIn: '1h' });
             logger_1.default.info(`Admin login successful for email: ${Email}`);
             return res.status(200).json({ message: 'Login successful', token });
         }

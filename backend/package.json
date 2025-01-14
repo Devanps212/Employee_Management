@@ -5,8 +5,7 @@
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "stage": "tsc && git status && git add .",
-    "start": "nodemon src/index.ts --exec ts-node"
+    "start": "nodemon dist/index.js"
   },
   "keywords": [],
   "author": "",

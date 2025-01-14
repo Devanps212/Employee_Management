@@ -31,7 +31,7 @@ app.use('/employee', employeeRouter)
 app.use('/department', departmentRouter)
 app.use(errorHandling as any)
 
-app.get('/status', (req: Request, res: Response) => {
+app.get('/', (req: Request, res: Response) => {
     res.status(200).json({ message: 'Server is running' });
 });
 
